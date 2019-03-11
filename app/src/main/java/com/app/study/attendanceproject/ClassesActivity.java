@@ -31,24 +31,40 @@ public class ClassesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes);
 
-        listView =  findViewById(R.id.listview);
-//        courseId =  findViewById(R.id.courseid);
-//        courseName =  findViewById(R.id.coursename);
+        listView =  findViewById(R.id.listviewClass);
 
         coursesList = getCourseData();
         getCourseData();
 
         adapter = new CourseListAdapter(coursesList, getApplicationContext());
         listView.setAdapter(adapter);
+//        final Courses courseData = new Courses();
+//        final String crsid=courseData.getCourseId();
+//        final String crsname=courseData.getCourseName();
 
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             Courses courseData = new Courses();
+             String crsid=courseData.getCourseId();
+             String crsname=courseData.getCourseName();
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), MarkActivity.class);
-                v.getContext().startActivity(intent);
+
 //                String name = parent.getItemAtPosition(position).toString();
+//                Log.d(TAG, "onItemClick: The item is: " + name);
+
+//                Cursor data = mDatabaseHelper.getCourseData(); //get the id associated with that name
+//                String course= data.getString(1);
+//                Log.d(TAG, "onItemClick: The item is: " + course);
+//                Intent editScreenIntent = new Intent(CustomersRegistered.this, EditDetails.class);
+//                editScreenIntent.putExtra("pid", data.getInt(0));
+
+                Intent intent = new Intent(getApplicationContext(), MarkActivity.class);
+                intent.putExtra("CourseId", crsid);
+                intent.putExtra("Coursename", crsname);
+                v.getContext().startActivity(intent);
+
 ////                Log.d(TAG, "onItemClick: You Clicked on " + name);
 //
 //                Cursor data = mDatabaseHelper.getCourseData(); //get the id associated with that name
@@ -76,6 +92,8 @@ public class ClassesActivity extends AppCompatActivity {
             }
 
         });
+//        showList();
+
 
     }
 
@@ -91,14 +109,8 @@ public class ClassesActivity extends AppCompatActivity {
             do {
                 Courses courseData = new Courses();
                 coursesList.add(courseData);
-                courseData.setCourseId(cursor.getInt(1));
-//                    FName.setText(cursor.getString(1));
+                courseData.setCourseId(cursor.getString(1));
                 courseData.setCourseName(cursor.getString(2));
-//                    SName.setText(cursor.getString(2));
-//                customerData.setCusEmail(cursor.getString(6));
-//                    cusEmail.setText(cursor.getString(6));
-//                    customerData.setImage(cursor.getString(7));
-//                    profilePic.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(7)));
 
             } while (cursor.moveToNext() );
             CourseListAdapter courseListAdapter = new CourseListAdapter( coursesList,ClassesActivity.this);
@@ -131,16 +143,18 @@ public class ClassesActivity extends AppCompatActivity {
             do {
 
 //                    Customer customerData = new Customer();
-                customerList.add(courseData);
-                courseData.setCourseId(courses.getInt(courses.getColumnIndex("ID")));
 
-                courseData.setCourseName(courses.getString(courses.getColumnIndex("course")));
+                coursesList.add(courseData);
+                courseData.setCourseId(courses.getString(courses.getColumnIndex("courseid")));
+
+                courseData.setCourseName(courses.getString(courses.getColumnIndex("coursename")));
+
 
 
 
             } while (courses.moveToNext());
         }
-        CourseListAdapter courseListAdapter = new CourseListAdapter(customerList,ClassesActivity.this);
+        CourseListAdapter courseListAdapter = new CourseListAdapter(coursesList,ClassesActivity.this);
         listView.setAdapter(courseListAdapter); //listView is defined in onCreate() method
         courses.close();
 

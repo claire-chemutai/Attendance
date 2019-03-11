@@ -6,4 +6,41 @@
     android:layout_height="match_parent"
     tools:context="com.app.study.attendanceproject.MarkActivity">
 
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <ImageButton
+        android:id="@+id/imageBtnMark"
+        android:layout_width="56dp"
+        android:layout_height="52dp"
+        app:layout_constraintBottom_toTopOf="@+id/listviewMark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/courseNameMark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
+        android:id="@+id/courseNameMark"
+        android:layout_width="293dp"
+        android:layout_height="43dp"
+        android:text="Course Name"
+        app:layout_constraintBottom_toTopOf="@+id/listviewMark"
+        app:layout_constraintEnd_toStartOf="@+id/imageBtnMark"
+        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--</LinearLayout>-->
+
+    <ListView
+        android:id="@+id/listviewMark"
+        android:layout_width="384dp"
+        android:layout_height="442dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageBtnMark"></ListView>
+
+
 </android.support.constraint.ConstraintLayout>

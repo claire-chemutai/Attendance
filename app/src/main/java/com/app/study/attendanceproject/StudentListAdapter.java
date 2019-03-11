@@ -1,113 +1,109 @@
 package com.app.study.attendanceproject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by study on 3/5/2019.
+ * Created by study on 3/10/2019.
  */
 
-public class CourseListAdapter extends ArrayAdapter<Courses> {
-    private static final String TAG ="CourseListAdapters" ;
-    ArrayList<Courses> courseList;
+public class StudentListAdapter extends ArrayAdapter<Student> {
+    private static final String TAG ="StudentListAdapters" ;
+    ArrayList<Student> studentList;
     Context context;
     DatabaseHelper mDatabaseHelper;
-    Courses course;
+    Student student;
 
-    public CourseListAdapter(ArrayList<Courses> courseList, Context context) {
-        super(context, R.layout.row_item, courseList);
-        this.courseList = courseList;
+    public StudentListAdapter(ArrayList<Student> studentList, Context context) {
+        super(context, R.layout.row_item, studentList);
+        this.studentList = studentList;
         this.context = context;
         mDatabaseHelper = new DatabaseHelper(context);
 
     }
 
-    public CourseListAdapter(@NonNull Context context, int resource, ArrayList<Courses> courseList, Context context1, DatabaseHelper mDatabaseHelper, Courses course) {
+    public StudentListAdapter(@NonNull Context context, int resource, ArrayList<Student> studentList, Context context1, DatabaseHelper mDatabaseHelper, Student student) {
         super(context, resource);
-        this.courseList = courseList;
+        this.studentList = studentList;
         this.context = context1;
         this.mDatabaseHelper = mDatabaseHelper;
-        this.course = course;
+        this.student = student;
     }
 
-    public CourseListAdapter(@NonNull Context context, int resource, int textViewResourceId, ArrayList<Courses> courseList, Context context1, DatabaseHelper mDatabaseHelper, Courses course) {
+    public StudentListAdapter(@NonNull Context context, int resource, int textViewResourceId, ArrayList<Student> studentList, Context context1, DatabaseHelper mDatabaseHelper, Student student) {
         super(context, resource, textViewResourceId);
-        this.courseList = courseList;
+        this.studentList = studentList;
         this.context = context1;
         this.mDatabaseHelper = mDatabaseHelper;
-        this.course = course;
+        this.student = student;
     }
 
-    public CourseListAdapter(@NonNull Context context, int resource, @NonNull Courses[] objects, ArrayList<Courses> courseList, Context context1, DatabaseHelper mDatabaseHelper, Courses course) {
+    public StudentListAdapter(@NonNull Context context, int resource, @NonNull Student[] objects, ArrayList<Student> studentList, Context context1, DatabaseHelper mDatabaseHelper, Student student) {
         super(context, resource, objects);
-        this.courseList = courseList;
+        this.studentList = studentList;
         this.context = context1;
         this.mDatabaseHelper = mDatabaseHelper;
-        this.course = course;
+        this.student = student;
     }
 
-    public CourseListAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull Courses[] objects, ArrayList<Courses> courseList, Context context1, DatabaseHelper mDatabaseHelper, Courses course) {
+    public StudentListAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull Student[] objects, ArrayList<Student> studentList, Context context1, DatabaseHelper mDatabaseHelper, Student student) {
         super(context, resource, textViewResourceId, objects);
-        this.courseList = courseList;
+        this.studentList = studentList;
         this.context = context1;
         this.mDatabaseHelper = mDatabaseHelper;
-        this.course = course;
+        this.student = student;
     }
 
-    public CourseListAdapter(@NonNull Context context, int resource, @NonNull List<Courses> objects, ArrayList<Courses> courseList, Context context1, DatabaseHelper mDatabaseHelper, Courses course) {
+    public StudentListAdapter(@NonNull Context context, int resource, @NonNull List<Student> objects, ArrayList<Student> studentList, Context context1, DatabaseHelper mDatabaseHelper, Student student) {
         super(context, resource, objects);
-        this.courseList = courseList;
+        this.studentList = studentList;
         this.context = context1;
         this.mDatabaseHelper = mDatabaseHelper;
-        this.course = course;
+        this.student = student;
     }
 
-    public CourseListAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<Courses> objects, ArrayList<Courses> courseList, Context context1, DatabaseHelper mDatabaseHelper, Courses course) {
+    public StudentListAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<Student> objects, ArrayList<Student> studentList, Context context1, DatabaseHelper mDatabaseHelper, Student student) {
         super(context, resource, textViewResourceId, objects);
-        this.courseList = courseList;
+        this.studentList = studentList;
         this.context = context1;
         this.mDatabaseHelper = mDatabaseHelper;
-        this.course = course;
+        this.student = student;
     }
 
 
 
-
-    // View lookup cache
-    private static class ViewHolder {
-        TextView courseName;
-        TextView courseId;
-
+    public static class DataHolder {
+        TextView studentName;
+        TextView studentId;
+        ToggleButton toggleButton;
 
     }
-
-
-
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final Courses course = getItem(position);
+//        final Student student = getItem(position);
 
 //        Log.i("CLA", "Course : " + course);
-        ViewHolder holder; // view lookup cache stored in tag
+        DataHolder holder; // view lookup cache stored in tag
 
         final View result;
 
         if (convertView == null) {
 
-            holder = new ViewHolder();
+            holder = new DataHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_item, parent, false);
-            holder.courseId = convertView.findViewById(R.id.courseid);
-            holder.courseName = convertView.findViewById(R.id.coursename);
+            convertView = inflater.inflate(R.layout.row_item_mark, parent, false);
+            holder.studentId = convertView.findViewById(R.id.studentid);
+            holder.studentName = convertView.findViewById(R.id.studentname);
+            holder.toggleButton = convertView.findViewById(R.id.toggleButton);
 //            holder.edit = convertView.findViewById(R.id.editButton);
 //            holder.delete = convertView.findViewById(R.id.cancelButton);
 
@@ -115,15 +111,15 @@ public class CourseListAdapter extends ArrayAdapter<Courses> {
 
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (StudentListAdapter.DataHolder) convertView.getTag();
             result = convertView;
         }
 
 
 
 
-        holder.courseId.setText(String.valueOf(course.getCourseId()));
-        holder.courseName.setText(String.valueOf(course.getCourseName()));
+        holder.studentId.setText(String.valueOf(student.getStudentId()));
+        holder.studentName.setText(String.valueOf(student.getStudentName()));
 //        holder.edit.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View view) {
 //                Log.i("CLA", "Customer data: " + mDatabaseHelper.getData());
@@ -183,4 +179,31 @@ public class CourseListAdapter extends ArrayAdapter<Courses> {
         return result;
     }
 
+
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return "StudentListAdapter{}";
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }

@@ -130,6 +130,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
+//        String Adminemail = _emailText.getText().toString();
+//        String Adminpassword = _passwordText.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("enter a valid email address");
@@ -148,7 +150,12 @@ public class LoginActivity extends AppCompatActivity {
         if ((email== "claire@info.com") && (password=="1234")) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = true;
-        } else {
+        }
+//        if ((Adminemail== "claire@admin.com") && (Adminpassword=="1234")) {
+//            _passwordText.setError("between 4 and 10 alphanumeric characters");
+//            valid = true;
+//        }
+        else {
             _passwordText.setError(null);
         }
 

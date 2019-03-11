@@ -30,6 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN5 = "gender";
     private static final String COLUMN6 = "email";
 
+    private static final String ALGORITHM = "algorithm";
+    private static final String ALG_COL1 = "idnumber";
+    private static final String ALG_COL2 = "firstname";
+    private static final String ALG_COL3 = "secondname";
+    private static final String ALG_COL4 = "absent";
+
 
 
     public DatabaseHelper(Context context) {
@@ -52,8 +58,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN5 + " TEXT NOT NULL, " +
                 COLUMN6 + " TEXT NOT NULL)";
 
+        String createAlgTable = "CREATE TABLE " + ALGORITHM +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ALG_COL1 + " INTEGER NOT NULL, " +
+                ALG_COL2 + " TEXT NOT NULL, " +
+                ALG_COL3 + " TEXT NOT NULL, " +
+                ALG_COL4 + " TEXT NOT NULL)";
+
         db.execSQL(createClassTable);
         db.execSQL(createStudentTable);
+        db.execSQL(createAlgTable);
     }
 
     @Override
@@ -114,6 +127,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + COURSE_TABLE;
         Cursor data = db.rawQuery(query, null);
         return data;
+
+    }
+
+    public Cursor getStudentData(String table){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + table;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+
+    }
+
+    public boolean addStudentToClass(String fname,String sname,int studentId){
+        String absent="Absent";
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ALG_COL1,studentId);
+        contentValues.put(ALG_COL2,fname);
+        contentValues.put(ALG_COL3,sname);
+        contentValues.put(ALG_COL4,absent);
+
+        Log.d(TAG, "addData: Adding student to " + ALGORITHM);
+
+        long result = db.insert(ALGORITHM, null, contentValues);
+
+        //if date as inserted incorrectly it will return -1
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 

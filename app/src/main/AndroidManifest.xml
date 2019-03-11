@@ -37,7 +37,8 @@
         <activity android:name=".ClassesActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CourseRegistration" />
-        <activity android:name=".StudentRegistration"></activity>
+        <activity android:name=".StudentRegistration" />
+        <activity android:name=".AddStudentToClass"></activity>
     </application>
 
 </manifest>

@@ -45,7 +45,7 @@ public class StudentRegistration extends AppCompatActivity {
                 DOB = dateOfBirth.getText().toString();
                 id = Integer.parseInt(identification.getText().toString());
                 genderType = genderSpinner.getSelectedItem().toString();
-                if (FirstName.length() != 0 && SecondName.length() != 0 && email.length() != 0
+                if (fname.length() != 0 && sname.length() != 0 && email.length() != 0
                         && DOB.length() != 0 && id!=null) {
 
 

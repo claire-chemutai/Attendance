@@ -8,15 +8,15 @@
     android:orientation="horizontal"
     android:background="@drawable/layout_background"
 
-    android:columnCount="2">
+    android:columnCount="3">
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
 
     <TextView
-        android:id="@+id/courseid"
+        android:id="@+id/studentid"
         android:layout_width="96dp"
         android:layout_height="36dp"
         android:layout_alignParentTop="true"
@@ -24,25 +24,41 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:paddingTop="10dp"
-        android:text="CourseId"
-        app:layout_constraintEnd_toStartOf="@+id/coursename"
+        android:text="StudentId"
+        app:layout_constraintEnd_toStartOf="@+id/studentname"
         app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/coursename"
-        android:layout_width="276dp"
+        android:id="@+id/studentname"
+        android:layout_width="121dp"
         android:layout_height="36dp"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/courseid"
+        android:layout_toEndOf="@+id/studentid"
         android:paddingTop="10dp"
-        android:text="CourseName"
+        android:text="StudentName"
+        app:layout_constraintEnd_toStartOf="@+id/toggleButton"
+        app:layout_constraintStart_toEndOf="@+id/studentid"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:checked="false"
+        android:text="Absent"
+        android:textOff="Absent"
+        android:textOn="Present"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/courseid"
+        app:layout_constraintStart_toEndOf="@+id/studentname"
         app:layout_constraintTop_toTopOf="parent" />
     <!--</LinearLayout>-->
 

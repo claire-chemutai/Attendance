@@ -6,15 +6,15 @@ package com.app.study.attendanceproject;
 
 public class Courses {
     DatabaseHelper mDatabaseHelper;
-    String CourseName;
-    Integer CourseId;
+    String CourseName,CourseId;
+
 
 
     public Courses() {
     }
 
 
-    public Courses(DatabaseHelper mDatabaseHelper, String courseName, Integer courseId) {
+    public Courses(DatabaseHelper mDatabaseHelper, String courseName, String courseId) {
         this.mDatabaseHelper = mDatabaseHelper;
         CourseName = courseName;
         CourseId = courseId;
@@ -28,11 +28,11 @@ public class Courses {
     public String getCourseName() {
         return CourseName;
     }
-    public Integer getCourseId() {
+    public String getCourseId() {
         return CourseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(String courseId) {
         CourseId = courseId;
     }
 
