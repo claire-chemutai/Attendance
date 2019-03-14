@@ -87,97 +87,97 @@ public class StudentListAdapter extends ArrayAdapter<Student> {
         ToggleButton toggleButton;
 
     }
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
-//        final Student student = getItem(position);
-
-//        Log.i("CLA", "Course : " + course);
-        DataHolder holder; // view lookup cache stored in tag
-
-        final View result;
-
-        if (convertView == null) {
-
-            holder = new DataHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_item_mark, parent, false);
-            holder.studentId = convertView.findViewById(R.id.studentid);
-            holder.studentName = convertView.findViewById(R.id.studentname);
-            holder.toggleButton = convertView.findViewById(R.id.toggleButton);
-//            holder.edit = convertView.findViewById(R.id.editButton);
-//            holder.delete = convertView.findViewById(R.id.cancelButton);
-
-            result = convertView;
-
-            convertView.setTag(holder);
-        } else {
-            holder = (StudentListAdapter.DataHolder) convertView.getTag();
-            result = convertView;
-        }
-
-
-
-
-        holder.studentId.setText(String.valueOf(student.getStudentId()));
-        holder.studentName.setText(String.valueOf(student.getStudentName()));
-//        holder.edit.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//                Log.i("CLA", "Customer data: " + mDatabaseHelper.getData());
-//                Log.i("CLA", "Customer data: " +mDatabaseHelper.getCustomerDetails(customer.getCusEmail()));
-//                Cursor data = mDatabaseHelper.getCustomerDetails(customer.getCusEmail()); //get the id associated with that name
-//                int itemID = -1;
-//                String itemfname="";
-//                while (data.moveToNext()) {
-//                    itemID = data.getInt(0);
+//    public View getView(final int position, View convertView, ViewGroup parent) {
+//
+////        final Student student = getItem(position);
+//
+////        Log.i("CLA", "Course : " + course);
+//        DataHolder holder; // view lookup cache stored in tag
+//
+//        final View result;
+//
+//        if (convertView == null) {
+//
+//            holder = new DataHolder();
+//            LayoutInflater inflater = LayoutInflater.from(getContext());
+//            convertView = inflater.inflate(R.layout.row_item_mark, parent, false);
+//            holder.studentId = convertView.findViewById(R.id.studentid);
+//            holder.studentName = convertView.findViewById(R.id.studentname);
+//            holder.toggleButton = convertView.findViewById(R.id.toggleButton);
+////            holder.edit = convertView.findViewById(R.id.editButton);
+////            holder.delete = convertView.findViewById(R.id.cancelButton);
+//
+//            result = convertView;
+//
+//            convertView.setTag(holder);
+//        } else {
+//            holder = (StudentListAdapter.DataHolder) convertView.getTag();
+//            result = convertView;
+//        }
 //
 //
-//                    if (itemID > -1) {
-//                        Log.d(TAG, "onItemClick: The ID is: " + itemID);
-//                        Log.d(TAG, "onItemClick: The ID is: " + itemfname);
-//                        Intent editScreenIntent = new Intent(context.getApplicationContext(), EditDetails.class);
-//                        editScreenIntent.putExtra("Firstname", data.getString(1));
-//                        editScreenIntent.putExtra("Surname", data.getString(2));
-//                        editScreenIntent.putExtra("DOB", data.getString(3));
-//                        editScreenIntent.putExtra("ID", data.getString(4));
-//                        editScreenIntent.putExtra("Gender", data.getString(5));
-//                        editScreenIntent.putExtra("Email", data.getString(6));
-//                        Log.i("CLA", "gender: " + data.getString(5));
-//                        Log.i("CLA", "email: " + data.getString(6));
-//                        Log.i("CR EDIT", "ID FOUND: ");
-//                        editScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                        view.getContext().startActivity(editScreenIntent);
-//                    } else {
-//
-//                        Log.i("CR EDIT", "NO ID ASSOCIATED WITH THAT NAME: ");
-//                    }
-//                }
-//            }
-//        });
-//        holder.delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Cursor customerID= mDatabaseHelper.getCustomerID(customer.getCusEmail());
-//                mDatabaseHelper.deleteDetails(customerID);
-//
-//                Log.i("CLA", "DELETE DETAILS FOR: " + customerID);
-//                notifyDataSetChanged();
 //
 //
-//            }
-
-
-//        });
-        // Return the completed view to render on screen
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context.getApplicationContext(), MarkActivity.class);
-//                v.getContext().startActivity(intent);
-//            }
-//        });
-        return result;
-    }
+//        holder.studentId.setText(String.valueOf(student.getStudentId()));
+//        holder.studentName.setText(String.valueOf(student.getStudentName()));
+////        holder.edit.setOnClickListener(new View.OnClickListener() {
+////            public void onClick(View view) {
+////                Log.i("CLA", "Customer data: " + mDatabaseHelper.getData());
+////                Log.i("CLA", "Customer data: " +mDatabaseHelper.getCustomerDetails(customer.getCusEmail()));
+////                Cursor data = mDatabaseHelper.getCustomerDetails(customer.getCusEmail()); //get the id associated with that name
+////                int itemID = -1;
+////                String itemfname="";
+////                while (data.moveToNext()) {
+////                    itemID = data.getInt(0);
+////
+////
+////                    if (itemID > -1) {
+////                        Log.d(TAG, "onItemClick: The ID is: " + itemID);
+////                        Log.d(TAG, "onItemClick: The ID is: " + itemfname);
+////                        Intent editScreenIntent = new Intent(context.getApplicationContext(), EditDetails.class);
+////                        editScreenIntent.putExtra("Firstname", data.getString(1));
+////                        editScreenIntent.putExtra("Surname", data.getString(2));
+////                        editScreenIntent.putExtra("DOB", data.getString(3));
+////                        editScreenIntent.putExtra("ID", data.getString(4));
+////                        editScreenIntent.putExtra("Gender", data.getString(5));
+////                        editScreenIntent.putExtra("Email", data.getString(6));
+////                        Log.i("CLA", "gender: " + data.getString(5));
+////                        Log.i("CLA", "email: " + data.getString(6));
+////                        Log.i("CR EDIT", "ID FOUND: ");
+////                        editScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////
+////                        view.getContext().startActivity(editScreenIntent);
+////                    } else {
+////
+////                        Log.i("CR EDIT", "NO ID ASSOCIATED WITH THAT NAME: ");
+////                    }
+////                }
+////            }
+////        });
+////        holder.delete.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                Cursor customerID= mDatabaseHelper.getCustomerID(customer.getCusEmail());
+////                mDatabaseHelper.deleteDetails(customerID);
+////
+////                Log.i("CLA", "DELETE DETAILS FOR: " + customerID);
+////                notifyDataSetChanged();
+////
+////
+////            }
+//
+//
+////        });
+//        // Return the completed view to render on screen
+////        convertView.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                Intent intent = new Intent(context.getApplicationContext(), MarkActivity.class);
+////                v.getContext().startActivity(intent);
+////            }
+////        });
+//        return result;
+//    }
 
 
 

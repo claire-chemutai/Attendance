@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     tools:context="com.app.study.attendanceproject.MarkActivity">
 
     <!--<LinearLayout-->
@@ -13,7 +15,7 @@
     <ImageButton
         android:id="@+id/imageBtnMark"
         android:layout_width="56dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/listviewMark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/courseNameMark"
@@ -23,7 +25,7 @@
     <TextView
         android:id="@+id/courseNameMark"
         android:layout_width="293dp"
-        android:layout_height="43dp"
+        android:layout_height="wrap_content"
         android:text="Course Name"
         app:layout_constraintBottom_toTopOf="@+id/listviewMark"
         app:layout_constraintEnd_toStartOf="@+id/imageBtnMark"
@@ -32,15 +34,18 @@
         app:layout_constraintTop_toTopOf="parent" />
     <!--</LinearLayout>-->
 
-    <ListView
-        android:id="@+id/listviewMark"
-        android:layout_width="384dp"
-        android:layout_height="442dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageBtnMark"></ListView>
+        <ListView
+            android:id="@+id/listviewMark"
+            android:layout_width="384dp"
+            android:layout_height="442dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageBtnMark">
+
+        </ListView>
+
 
 
 </android.support.constraint.ConstraintLayout>

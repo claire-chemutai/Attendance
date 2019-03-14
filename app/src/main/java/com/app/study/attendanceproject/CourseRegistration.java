@@ -2,10 +2,17 @@ package com.app.study.attendanceproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CourseRegistration extends AppCompatActivity {
 
@@ -16,6 +23,9 @@ public class CourseRegistration extends AppCompatActivity {
     String courseid, coursename;
 
     private Button submit;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
+    Courses course;
 
 
     @Override
@@ -23,48 +33,51 @@ public class CourseRegistration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_registration);
 
-        mDatabaseHelper = new DatabaseHelper(this);
-
         CourseId = findViewById(R.id.courseid);
         CourseName = findViewById(R.id.coursename);
-
         submit= findViewById(R.id.submitButton);
-        submit.setOnClickListener(new View.OnClickListener() {
+
+        database = FirebaseDatabase.getInstance();
+        myRef= database.getReference("Courses");
+        course=new Courses();
+
+
+    }
+    private void getValues(){
+        course.setCourseId(CourseId.getText().toString());
+        course.setCourseName(CourseName.getText().toString());
+    }
+
+
+    public void AddCourse(View view) {
+
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                courseid = CourseId.getText().toString();
-                coursename = CourseName.getText().toString();
-                if (courseid.length()!= 0&& coursename.length()!= 0 ) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                getValues();
+                myRef.child(course.getCourseId()).setValue(course);
+                Toast.makeText(CourseRegistration.this, "Data inserting...",
+                        Toast.LENGTH_SHORT);
 
 
-                    AddCourse(courseid,coursename);
-                    CourseId.setText("");
-                    CourseName.setText("");
+            }
 
-
-                }
-                else {
-                    toastMessage("You must put something in the text field!");
-                }
-
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
-
-    }
-
-    public void AddCourse(String courseid,  String coursename) {
-        boolean insertData = mDatabaseHelper.addCourse(courseid,coursename);
-
-        if (insertData) {
-            toastMessage("Data Successfully Inserted!");
-        } else {
-            toastMessage("Something went wrong");
-        }
     }
 
 
-    private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
-    }
+//    private void toastMessage(String message){
+//        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+//    }
 }

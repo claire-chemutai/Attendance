@@ -78,6 +78,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean addCourse(String courseid,String coursename) {
+
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1,courseid);

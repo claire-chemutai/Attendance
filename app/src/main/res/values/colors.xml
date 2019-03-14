@@ -29,4 +29,10 @@
     <color name="backgroundDark">#353554</color>
 
     <color name="stroke">#b4b4b4</color>
+
+    //FIREBASE
+
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_500">#9E9E9E</color>
 </resources>

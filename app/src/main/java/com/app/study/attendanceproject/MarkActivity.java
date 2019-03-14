@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -15,44 +16,90 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class MarkActivity extends AppCompatActivity {
     private static final String TAG ="StudentsRegistered" ;
-    DatabaseHelper mDatabaseHelper;
-    ArrayList<Student> studentList;
+    ArrayList<String> studentList;
+    ArrayAdapter<String> adapter;
     ListView listView;
-    private Cursor students;
-    private static ListAdapter adapter;
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    Student student;
     private TextView studentName, studentId;
     ImageButton addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mDatabaseHelper = new DatabaseHelper(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark);
 
-        listView =  findViewById(R.id.listviewMark);
+
         addBtn=findViewById(R.id.imageBtnMark);
 
-        Bundle bundle = getIntent().getExtras();
-        String value = bundle.getString("CourseId");
-        String value2 = bundle.getString("Coursename");
 
-        studentList = getStudentData();
-//        getStudentData();
+        student= new Student();
+        listView =  findViewById(R.id.listviewMark);
+        database= FirebaseDatabase.getInstance();
+        ref=database.getReference("Student");
+        studentList= new ArrayList<>();
+        adapter= new ArrayAdapter<String>(this, R.layout.row_item_mark,
+                R.id.studentname, studentList);
 
-        adapter = new StudentListAdapter(studentList, getApplicationContext());
-        listView.setAdapter(adapter);
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                registerStudent();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    student=ds.getValue(Student.class);
+
+                    studentList.add(student.getId()+"  "+
+                            student.getFirstname()+"  "+ student.getSurname());
+                    Log.d(TAG, "onDataChange student: " + student.getId()+"  "+
+                            student.getFirstname()+" "+ student.getSurname());
+
+                }
+                listView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+    }
+
+    public void addFingerprint(View view){
+        Intent intent = new Intent(getApplicationContext(),FingerprintActivity.class);
+        startActivity(intent);
+
+    }
+
+//        Bundle bundle = getIntent().getExtras();
+//        String value = bundle.getString("CourseId");
+//        String value2 = bundle.getString("Coursename");
+//
+//        studentList = getStudentData();
+////        getStudentData();
+//
+//        adapter = new StudentListAdapter(studentList, getApplicationContext());
+//        listView.setAdapter(adapter);
+//
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+////                registerStudent();
+//            }
+//        });
 
 
 
@@ -107,41 +154,41 @@ public class MarkActivity extends AppCompatActivity {
 //        showList();
 
 
-    }
+//    }
 
-    public ArrayList<Student> getStudentData() {
-        Bundle bundle = getIntent().getExtras();
-        String value = bundle.getString("CourseId");
-
-
-        Cursor cursor = mDatabaseHelper.getStudentData(value);
-        studentList= new ArrayList<>();
-
-        students = mDatabaseHelper.getStudentData(value);
-
-        // looping through all rows and adding to list
-
-        if (cursor.moveToFirst()) {
-            do {
-                Student studentData = new Student();
-                studentList.add(studentData);
-                studentData.setStudentId(cursor.getInt(1));
-                studentData.setStudentName(cursor.getString(2));
-
-            } while (cursor.moveToNext() );
-            StudentListAdapter studentListAdapter = new StudentListAdapter( studentList,MarkActivity.this);
-            listView.setAdapter(studentListAdapter); //listView is defined in onCreate() method
-            students.close();
-        }
-
-
-        return studentList;
-
-
-    }
+//    public ArrayList<Student> getStudentData() {
+//        Bundle bundle = getIntent().getExtras();
+//        String value = bundle.getString("CourseId");
+//
+//
+//        Cursor cursor = mDatabaseHelper.getStudentData(value);
+//        studentList= new ArrayList<>();
+//
+//        students = mDatabaseHelper.getStudentData(value);
+//
+//        // looping through all rows and adding to list
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Student studentData = new Student();
+//                studentList.add(studentData);
+//                studentData.setStudentId(cursor.getInt(1));
+//                studentData.setStudentName(cursor.getString(2));
+//
+//            } while (cursor.moveToNext() );
+//            StudentListAdapter studentListAdapter = new StudentListAdapter( studentList,MarkActivity.this);
+//            listView.setAdapter(studentListAdapter); //listView is defined in onCreate() method
+//            students.close();
+//        }
+//
+//
+//        return studentList;
+//
+//
+//    }
 
     public void registerStudent(){
-        Intent intent= new Intent(MarkActivity.this, RegisterStudent.class);
+        Intent intent= new Intent(MarkActivity.this, AddStudentToClass.class);
         startActivity(intent);
 
     }

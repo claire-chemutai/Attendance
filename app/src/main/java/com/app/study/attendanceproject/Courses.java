@@ -12,6 +12,10 @@ public class Courses {
 
     public Courses() {
     }
+    public Courses( String courseName, String courseId) {
+        CourseName = courseName;
+        CourseId = courseId;
+    }
 
 
     public Courses(DatabaseHelper mDatabaseHelper, String courseName, String courseId) {

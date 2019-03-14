@@ -5,42 +5,42 @@ package com.app.study.attendanceproject;
  */
 
 public class Student {
-    DatabaseHelper mDatabaseHelper;
-    String StudentName;
-    int StudentId;
+    String firstname;
+    String surname;
+    int id;
 
     public Student(){
 
     }
 
-
-    public Student(DatabaseHelper mDatabaseHelper, String studentName, int studentId) {
-        this.mDatabaseHelper = mDatabaseHelper;
-        StudentName = studentName;
-        StudentId = studentId;
+    public Student(String firstname, String surname, int id) {
+        this.firstname = firstname;
+        this.surname = surname;
+        this.id = id;
     }
 
-    public DatabaseHelper getmDatabaseHelper() {
-        return mDatabaseHelper;
+
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setmDatabaseHelper(DatabaseHelper mDatabaseHelper) {
-        this.mDatabaseHelper = mDatabaseHelper;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getStudentName() {
-        return StudentName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setStudentName(String studentName) {
-        StudentName = studentName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public int getStudentId() {
-        return StudentId;
+    public int getId() {
+        return id;
     }
 
-    public void setStudentId(int studentId) {
-        StudentId = studentId;
+    public void setId(int id) {
+        this.id = id;
     }
 }

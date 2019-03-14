@@ -38,7 +38,11 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CourseRegistration" />
         <activity android:name=".StudentRegistration" />
-        <activity android:name=".AddStudentToClass"></activity>
+        <activity android:name=".AddStudentToClass" />
+        <activity android:name=".EmailPasswordActivity" />
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".fingerprintActivity" />
+        <activity android:name=".FingerprintActivity"></activity>
     </application>
 
 </manifest>
