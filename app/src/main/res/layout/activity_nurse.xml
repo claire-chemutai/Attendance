@@ -1,38 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".NurseActivity">
+    android:background="@drawable/gradient1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.app.study.attendanceproject.CourseRegistration">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="89dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/mainlogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_main" />
-
-    <com.andremion.floatingnavigationview.FloatingNavigationView
-        android:id="@+id/floating_navigation_view"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:drawMenuBelowFab="false"
-        app:headerLayout="@layout/navigation_view_header"
-        app:layout_anchor="@id/toolbar"
-        app:layout_anchorGravity="bottom|end"
-        app:menu="@menu/navigation_view"/>
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:radius="15dp"
+        android:text="@string/nurse_appointment"
+        android:textSize="30sp" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@drawable/layout_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/date_nurse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/nstudentid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/student_id"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/nstudentname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/student_name"
+                android:inputType="textPersonName" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+            <EditText
+                android:id="@+id/nstudentReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/report"
+                android:inputType="textPersonName" />
+
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:background="@color/colorLogBtn"
+                android:onClick="AddCourse"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

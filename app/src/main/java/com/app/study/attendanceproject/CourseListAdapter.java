@@ -130,10 +130,10 @@ public class CourseListAdapter extends ArrayAdapter<Courses> {
                     // whenever data at this location is updated.
 
                     Courses value = dataSnapshot.getValue(Courses.class);
-                    name[0] =value.getCourseName();
-                    id[0] =value.getCourseId();
+                    name[0] =value.getcourseName();
+                    id[0] =value.getcourseId();
 
-                    Log.d(TAG, "Value is: " + value.getCourseName() + value.getCourseId());
+                    Log.d(TAG, "Value is: " + value.getcourseName() + value.getcourseId());
                 }
 
                 @Override

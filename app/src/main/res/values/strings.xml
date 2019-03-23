@@ -78,6 +78,12 @@
     <string name="Absent">Absent</string>
     <string name="Present">Present</string>
     <string name="StudentName">StudentName</string>
+    <string name="nurse_appointment">NURSE APPOINTMENT</string>
+    <string name="student_id">Student ID</string>
+    <string name="student_name">Student Name</string>
+    <string name="report">Report</string>
+    <string name="submit">Submit</string>
+    <string name="todo">TODO</string>
 
 
 </resources>

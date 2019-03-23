@@ -60,8 +60,9 @@ public class ClassesActivity extends AppCompatActivity {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                    course=ds.getValue(Courses.class);
 
-                   coursesList.add(course.getCourseId()+" "+
-                           course.getCourseName());
+                   coursesList.add(course.getcourseId()+" "+
+                           course.getcourseName());
+                    Log.d(TAG, "onDataChange: " +course.getcourseId() + " "+course.getcourseName());
 
                 }
                 listView.setAdapter(adapter);
@@ -73,6 +74,12 @@ public class ClassesActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    public void markPage(View view){
+        Intent intent = new Intent(getApplicationContext(),MarkActivity.class);
+        startActivity(intent);
+    }
 //        final Courses courseData = new Courses();
 //        final String crsid=courseData.getCourseId();
 //        final String crsname=courseData.getCourseName();
@@ -130,11 +137,7 @@ public class ClassesActivity extends AppCompatActivity {
 //        showList();
 
 
-    }
-    public void markPage(View view){
-        Intent intent = new Intent(getApplicationContext(),MarkActivity.class);
-        startActivity(intent);
-    }
+
 
 //    public ArrayList<Courses> getCourseData() {
 //        Cursor cursor = mDatabaseHelper.getCourseData();

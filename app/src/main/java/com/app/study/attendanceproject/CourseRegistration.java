@@ -44,8 +44,8 @@ public class CourseRegistration extends AppCompatActivity {
 
     }
     private void getValues(){
-        course.setCourseId(CourseId.getText().toString());
-        course.setCourseName(CourseName.getText().toString());
+        course.setcourseId(CourseId.getText().toString());
+        course.setcourseName(CourseName.getText().toString());
     }
 
 
@@ -60,7 +60,7 @@ public class CourseRegistration extends AppCompatActivity {
                 // whenever data at this location is updated.
 
                 getValues();
-                myRef.child(course.getCourseId()).setValue(course);
+                myRef.child(course.getcourseId()).setValue(course);
                 Toast.makeText(CourseRegistration.this, "Data inserting...",
                         Toast.LENGTH_SHORT);
 

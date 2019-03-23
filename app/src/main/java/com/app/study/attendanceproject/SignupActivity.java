@@ -11,6 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 //import butterknife.BindView;
 //import butterknife.ButterKnife;
 
@@ -19,8 +25,11 @@ public class SignupActivity extends AppCompatActivity {
 
     private Button _signupButton;
     private TextView _loginLink;
-    private EditText  _nameText,_addressText,_emailText;
+    private EditText  _nameText,_emailText;
     private EditText _mobileText,_passwordText,_reEnterPasswordText;
+    Account account;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
 
 
 
@@ -30,8 +39,11 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        database = FirebaseDatabase.getInstance();
+        myRef= database.getReference("Account");
+        account=new Account();
+
         _nameText= findViewById(R.id.input_name);
-        _addressText= findViewById(R.id.input_address);
         _emailText= findViewById(R.id.input_email);
         _mobileText= findViewById(R.id.input_mobile);
         _reEnterPasswordText= findViewById(R.id.input_reEnterPassword);
@@ -58,6 +70,14 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+    private void getValues(){
+        account.set_nameText( _nameText.getText().toString());
+        account.set_emailText( _emailText.getText().toString());
+        account.set_mobileText( _mobileText.getText().toString());
+        account.set_passwordText( _passwordText.getText().toString());
+        account.set_reEnterPasswordText( _reEnterPasswordText.getText().toString());
+    }
+
     public void signup() {
         Log.d(TAG, "Signup");
 
@@ -74,15 +94,40 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
-        String email = _emailText.getText().toString();
-        String mobile = _mobileText.getText().toString();
-        String password = _passwordText.getText().toString();
-        String reEnterPassword = _reEnterPasswordText.getText().toString();
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
 
-        // TODO: Implement your own signup logic here.
+                getValues();
+                myRef.child(account.get_nameText()).setValue(account);
+                Toast.makeText(SignupActivity.this, "Data inserting...",
+                        Toast.LENGTH_SHORT);
+                Log.d(TAG, "onDataChange: " + account.get_nameText() +
+                account.get_nameText() + account.get_nameText());
 
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+
+//        String name = _nameText.getText().toString();
+//        String address = _addressText.getText().toString();
+//        String email = _emailText.getText().toString();
+//        String mobile = _mobileText.getText().toString();
+//        String password = _passwordText.getText().toString();
+//        String reEnterPassword = _reEnterPasswordText.getText().toString();
+//
+//        // TODO: Implement your own signup logic here.
+//
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -112,7 +157,6 @@ public class SignupActivity extends AppCompatActivity {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
@@ -123,13 +167,6 @@ public class SignupActivity extends AppCompatActivity {
             valid = false;
         } else {
             _nameText.setError(null);
-        }
-
-        if (address.isEmpty()) {
-            _addressText.setError("Enter Valid Address");
-            valid = false;
-        } else {
-            _addressText.setError(null);
         }
 
 

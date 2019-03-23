@@ -42,7 +42,8 @@
         <activity android:name=".EmailPasswordActivity" />
         <activity android:name=".BaseActivity" />
         <activity android:name=".fingerprintActivity" />
-        <activity android:name=".FingerprintActivity"></activity>
+        <activity android:name=".FingerprintActivity" />
+        <activity android:name=".BarcodeActivity"></activity>
     </application>
 
 </manifest>

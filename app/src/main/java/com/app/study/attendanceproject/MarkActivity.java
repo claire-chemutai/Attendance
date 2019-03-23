@@ -1,8 +1,14 @@
 package com.app.study.attendanceproject;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +38,8 @@ public class MarkActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference ref;
     Student student;
-    private TextView studentName, studentId;
-    ImageButton addBtn;
+    TextView studentName, studentId;
+    ImageButton addBtn,editBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,11 @@ public class MarkActivity extends AppCompatActivity {
 
 
         addBtn=findViewById(R.id.imageBtnMark);
+//        studentName=findViewById(R.id.studentname);
+
+
+        editBtn=findViewById(R.id.editBtn);
+
 
 
         student= new Student();
@@ -77,11 +88,71 @@ public class MarkActivity extends AppCompatActivity {
         });
     }
 
-    public void addFingerprint(View view){
-        Intent intent = new Intent(getApplicationContext(),FingerprintActivity.class);
+    public void scanCard(View view){
+        try {
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_FORMATS", "CODE_39,CODE_93,CODE_128,DATA_MATRIX,ITF,CODABAR, PRODUCT_MODE");
+            startActivityForResult(intent, 0); //Barcode Scanner to scan for us
+        } catch (ActivityNotFoundException e) {
+            showDialog(MarkActivity.this, "No scanner found", "Download Scanner code Activity?", " Yes", "No").show();
+
+        };
+
+    }
+
+    public void addStudent(){
+        Intent intent= new Intent(MarkActivity.this, AddStudentToClass.class);
         startActivity(intent);
 
     }
+
+    private Dialog showDialog (final Activity act, CharSequence title, CharSequence message, CharSequence yes, CharSequence no ) {
+
+        // a subclass of dialog that can display buttons and message
+        AlertDialog.Builder download = new AlertDialog.Builder( act );
+        download.setTitle( title );
+        download.setMessage ( message );
+        download.setPositiveButton ( yes, new DialogInterface.OnClickListener ( ) {
+            @Override
+            public void onClick( DialogInterface dialog, int i ) {
+                // TODO Auto-generated method stub
+                //uri to download barcode scanner
+                Uri uri = Uri.parse( "market://search?q=pname:" + "com.google.zxing.client.android" );
+                Intent in = new Intent ( Intent.ACTION_VIEW, uri );
+                try {
+                    act.startActivity ( in );
+                } catch ( ActivityNotFoundException e) {
+
+                }
+            }
+        });
+        download.setNegativeButton ( no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick ( DialogInterface dialog, int i ) {
+                // TODO Auto-generated method stub
+            }
+        });
+        return download.show();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == 0) {
+//            TextView tvStatus=(TextView)findViewById(R.id.tvStatus);
+            TextView tvResult=findViewById(R.id.studentname);
+            if (resultCode == RESULT_OK) {
+//                tvStatus.setText(intent.getStringExtra("SCAN_RESULT_FORMAT"));
+                tvResult.setText(intent.getStringExtra("SCAN_RESULT"));
+            } else if (resultCode == RESULT_CANCELED) {
+//                tvStatus.setText("Press a button to start a scan.");
+                tvResult.setText("Scan cancelled.");
+            }
+        }
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
+}
 
 //        Bundle bundle = getIntent().getExtras();
 //        String value = bundle.getString("CourseId");
@@ -187,11 +258,7 @@ public class MarkActivity extends AppCompatActivity {
 //
 //    }
 
-    public void registerStudent(){
-        Intent intent= new Intent(MarkActivity.this, AddStudentToClass.class);
-        startActivity(intent);
 
-    }
 //    private void showList() {
 //        ArrayList<Courses> customerList = new ArrayList<Courses>();
 //        mDatabaseHelper = new DatabaseHelper(this);
@@ -239,7 +306,4 @@ public class MarkActivity extends AppCompatActivity {
      * customizable toast
      * @param message
      */
-    private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
-    }
-}
+

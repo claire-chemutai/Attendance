@@ -39,11 +39,7 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterKnifeVersion"
 
 //    implementation project(':library')
-
-
 }
-
-
 
 
 apply plugin: 'com.google.gms.google-services'

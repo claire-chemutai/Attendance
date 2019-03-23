@@ -33,30 +33,39 @@
 
     <TextView
         android:id="@+id/studentname"
-        android:layout_width="251dp"
-        android:layout_height="wrap_content"
+        android:layout_width="189dp"
+        android:layout_height="47dp"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:paddingTop="10dp"
         android:text="@string/StudentName"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButton"
+        app:layout_constraintEnd_toStartOf="@+id/markBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
+    <ImageButton
+        android:id="@+id/editBtn"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/markBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <Button
+        android:id="@+id/markBtn"
+        android:onClick="scanCard"
         android:layout_width="88dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:checked="false"
-        android:onClick="addFingerprint"
-        android:textOff="@string/Absent"
-        android:textOn="@string/Present"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="MARK"
+        app:layout_constraintEnd_toStartOf="@+id/editBtn"
         app:layout_constraintStart_toEndOf="@+id/studentname"
         app:layout_constraintTop_toTopOf="parent" />
     <!--</LinearLayout>-->

@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 //import butterknife.BindView;
 //import butterknife.ButterKnife;
@@ -29,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextView _signupLink;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
+    Account account;
 
     @Override
     public void onStart(){
@@ -50,6 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         _loginButton= findViewById(R.id.btn_login);
         _signupLink= findViewById(R.id.link_signup);
 
+        database = FirebaseDatabase.getInstance();
+        myRef= database.getReference("Account");
+        account=new Account();
+
 
 
 
@@ -59,7 +71,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login(email, password);
+//                login(email, password);
+                Intent intent= new Intent(LoginActivity.this, FacultyActivity.class);
+                startActivity(intent);
             }
 
 
@@ -90,7 +104,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public void login(String email, String password) {
+    public void login(final String email, String password) {
+//        final String mail=email;
+
         Log.d(TAG, "Login");
 
         if (!validate(email, password)) {
@@ -99,9 +115,40 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (validate(email, password)) {
-            onLoginSuccess();
+            onLoginSuccess(email);
             return;
         }
+
+//            myRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+//                        account=ds.getValue(Account.class);
+//                        if(account.get_emailText().equals(mail) &&  mail.contains("nurse@")){
+//                            onNurseLoginSuccess();
+//
+//                        }
+//                        else if(account.get_emailText().equals(mail) &&  mail.contains("admin@")){
+//                            onAdminLoginSuccess();
+//
+//                        }
+//                        else{
+//                            Toast.makeText(getBaseContext(), "Account does not exist", Toast.LENGTH_LONG).show();
+//
+//                        }
+//
+//
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
+
 
 
         _loginButton.setEnabled(false);
@@ -113,26 +160,26 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "createUserWithEmail:success");
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            updateUI(user);
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
+//                            updateUI(null);
+//                        }
+//
+//                        // ...
+//                    }
+//                });
 
 
 
@@ -145,7 +192,8 @@ public class LoginActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
+                        onLoginSuccess(email);
+
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
@@ -171,26 +219,31 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
+    public void onLoginSuccess(String email) {
         _loginButton.setEnabled(true);
         //finish();
+        if(email.contains("nurse@")){
+            Intent intent= new Intent(LoginActivity.this, NurseActivity.class);
+            startActivity(intent);
 
-        Intent intent= new Intent(LoginActivity.this, FacultyActivity.class);
-        startActivity(intent);
+        }
+        else if(email.contains("admin@")) {
+            Intent intent= new Intent(LoginActivity.this, FacultyActivity.class);
+            startActivity(intent);
+        }
+
     }
+
+
 
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _loginButton.setEnabled(true);
     }
 
     public boolean validate(String email, String password) {
         boolean valid = true;
-
-//        String email = _emailText.getText().toString();
-//        String password = _passwordText.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("enter a valid email address");
@@ -203,21 +256,10 @@ public class LoginActivity extends AppCompatActivity {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         }
-//        else {
-//            _passwordText.setError(null);
-//        }
-
-//        if ((email== "claire@info.com") && (password=="1234")) {
-//            _passwordText.setError("between 4 and 10 alphanumeric characters");
-//            valid = true;
-//        }
-//        if ((Adminemail== "claire@admin.com") && (Adminpassword=="1234")) {
-//            _passwordText.setError("between 4 and 10 alphanumeric characters");
-//            valid = true;
-//        }
         else {
             _passwordText.setError(null);
         }
+
 
 
         return valid;
